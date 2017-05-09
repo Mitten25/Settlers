@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
 
         Populate(4);
         Place();
+        RefreshPlayerObjects();
     }
 
     void Update()
@@ -59,6 +60,13 @@ public class GameManager : MonoBehaviour
             Players.RemoveAt(tempInt);
             id++;
         }
+    }
+
+    //put clones in empty players list
+    void RefreshPlayerObjects()
+    {
+        GameObject[] temp = GameObject.FindGameObjectsWithTag("Player");
+        Players = new List<GameObject>(temp) { };
     }
 
     void Populate(int total)

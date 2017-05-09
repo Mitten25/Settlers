@@ -50,14 +50,13 @@ public class GameManager : MonoBehaviour
     void Place()
     {
         List<Vector3> positions = new List<Vector3>() { new Vector3(5, 0, -4), new Vector3(-5, 0, -4), new Vector3(5, 0, 4), new Vector3(-5, 0, 4) };
-        List<GameObject> tempPlayers = Players;
         int id = 1;
-        for (int i = tempPlayers.Count; i > 0; i--)
+        for (int i = Players.Count; i > 0; i--)
         {         
             int tempInt = Random.Range(0, i - 1);
-            tempPlayers[tempInt].GetComponent<PlayerClass>().playerID = id;
-            Transform.Instantiate(tempPlayers[tempInt], positions[i-1], Quaternion.identity);
-            tempPlayers.RemoveAt(tempInt);
+            Players[tempInt].GetComponent<PlayerClass>().playerID = id;
+            Transform.Instantiate(Players[tempInt], positions[i-1], Quaternion.identity);
+            Players.RemoveAt(tempInt);
             id++;
         }
     }

@@ -10,16 +10,24 @@ public class PlayerClass : MonoBehaviour {
     {
 		if(playerID == 1)
         {
-            this.GetComponent<Renderer>().material = (Material)Resources.Load("Fields", typeof(Material));
+            this.GetComponent<Renderer>().material = (Material)Resources.Load("Blue", typeof(Material));
         }
-	}
+        else if (playerID == 2)
+        {
+            this.GetComponent<Renderer>().material = (Material)Resources.Load("Red", typeof(Material));
+        }
+        else if (playerID == 3)
+        {
+            this.GetComponent<Renderer>().material = (Material)Resources.Load("Orange", typeof(Material));
+        }
+        else if (playerID == 4)
+        {
+            this.GetComponent<Renderer>().material = (Material)Resources.Load("White", typeof(Material));
+        }
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (playerID == 1)
-        {
-            this.GetComponent<Renderer>().material = (Material)Resources.Load("Fields", typeof(Material));
-        }
     }
 }

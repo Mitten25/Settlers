@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private GameObject[] Tiles;
     private Material Desert, Fields, Forest, Hills, Mountains, Pasture;
     private List<Material> TileOptions;
+    public List<GameObject> Players = new List<GameObject>();
 
     // Use this for initialization
     void Awake ()
@@ -29,19 +30,50 @@ public class GameManager : MonoBehaviour
         Mountains = (Material)Resources.Load("Mountains", typeof(Material));
         Pasture = (Material)Resources.Load("Pasture", typeof(Material));
 
-        TileOptions = new List<Material>(new Material[19] { Desert, Fields, Fields, Fields, Fields, Forest, Forest, Forest, Forest, Hills, Hills, Hills, Mountains, Mountains, Mountains, Pasture, Pasture, Pasture, Pasture });
+        TileOptions = new List<Material>(new Material[19] { Desert, Fields, Fields, Fields, Fields, Forest, Forest,
+            Forest, Forest, Hills, Hills, Hills, Mountains, Mountains, Mountains, Pasture, Pasture, Pasture, Pasture });
 
         Tiles = GameObject.FindGameObjectsWithTag("Tile");
         //TileOptions = 
 
         DontDestroyOnLoad(gameObject);
         BuildMap();
-	}
+
+        Populate(4);
+        Place();
+    }
 
     void Update()
     {
     }
 
+    void Place()
+    {
+        List<Vector3> positions = new List<Vector3>() { new Vector3(5, 0, -4), new Vector3(-5, 0, -4), new Vector3(5, 0, 4), new Vector3(-5, 0, 4) };
+        List<GameObject> tempPlayers = Players;
+        int id = 1;
+        for (int i = tempPlayers.Count; i > 0; i--)
+        {         
+            int tempInt = Random.Range(0, i - 1);
+            tempPlayers[tempInt].GetComponent<PlayerClass>().playerID = id;
+            Transform.Instantiate(tempPlayers[tempInt], positions[i-1], Quaternion.identity);
+            tempPlayers.RemoveAt(tempInt);
+            id++;
+        }
+    }
+
+    void Populate(int total)
+    {
+        for (int i = total; i > 0; i--)
+        {
+            GameObject newPlayer = (GameObject)Resources.Load("Player", typeof(GameObject));
+            Players.Add(newPlayer);
+        }
+        //for (int i = 0; i < total; i++)
+        //{
+        //    Players[i].GetComponent<PlayerClass>().playerID = i + 1;
+        //}
+    }
     void BuildMap()
     {
         foreach(GameObject Tile in Tiles)

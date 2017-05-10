@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private Material Desert, Fields, Forest, Hills, Mountains, Pasture;
     private List<Material> TileOptions;
     public List<GameObject> Players = new List<GameObject>();
+    public int activePlayer;
 
     // Use this for initialization
     void Awake ()
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-
+        activePlayer = 1;
     }
 
     void Place()

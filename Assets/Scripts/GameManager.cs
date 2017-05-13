@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
         Place();
         RefreshPlayerObjects();
         //TODO: Probability Tiles
+        ProbabilityTiles();
         currentPhase = "startPlacement";
         activePlayer = 1;
     }
@@ -92,6 +93,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void ProbabilityTiles()
+    {
+
+    }
     void Place()
     {
         List<Vector3> positions = new List<Vector3>() { new Vector3(0, 0, 6), new Vector3(6, 0, 0), new Vector3(0, 0, -6), new Vector3(-6, 0, 0) };

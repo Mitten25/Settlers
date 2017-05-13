@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
         Populate(4);
         Place();
         RefreshPlayerObjects();
+        //TODO: Probability Tiles
         currentPhase = "startPlacement";
         activePlayer = 1;
     }
@@ -75,6 +76,18 @@ public class GameManager : MonoBehaviour
         while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhaseCompleted)
         {
             Debug.Log("p2Turn");
+            yield return 0;
+        }
+        activePlayer = 3;
+        while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhaseCompleted)
+        {
+            Debug.Log("p3Turn");
+            yield return 0;
+        }
+        activePlayer = 4;
+        while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhaseCompleted)
+        {
+            Debug.Log("p4Turn");
             yield return 0;
         }
     }

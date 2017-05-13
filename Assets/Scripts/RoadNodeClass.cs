@@ -5,6 +5,9 @@ using UnityEngine;
 public class RoadNodeClass : MonoBehaviour {
 
     public GameObject blueRoad;
+    public GameObject redRoad;
+    public GameObject orangeRoad;
+    public GameObject whiteRoad;
     public GameObject currentBuilding;
     public bool hasBuilding;
     public bool placed;
@@ -13,7 +16,10 @@ public class RoadNodeClass : MonoBehaviour {
 	void Start ()
     {
         ColorCode.Add(1, blueRoad);
-	}
+        ColorCode.Add(2, redRoad);
+        ColorCode.Add(3, orangeRoad);
+        ColorCode.Add(4, whiteRoad);
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -46,7 +52,6 @@ public class RoadNodeClass : MonoBehaviour {
             }
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("clicked");
                 placed = true;
                 GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad = true;
             }

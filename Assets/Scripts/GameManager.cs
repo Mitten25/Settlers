@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private List<Material> TileOptions;
     public List<GameObject> Players = new List<GameObject>();
     public int activePlayer;
+    public string currentPhase;
 
     // Use this for initialization
     void Awake ()
@@ -35,7 +36,6 @@ public class GameManager : MonoBehaviour
             Forest, Forest, Hills, Hills, Hills, Mountains, Mountains, Mountains, Pasture, Pasture, Pasture, Pasture });
 
         Tiles = GameObject.FindGameObjectsWithTag("Tile");
-        //TileOptions = 
 
         DontDestroyOnLoad(gameObject);
         BuildMap();
@@ -43,22 +43,52 @@ public class GameManager : MonoBehaviour
         Populate(4);
         Place();
         RefreshPlayerObjects();
+        currentPhase = "startPlacement";
+        activePlayer = 1;
     }
 
     void Update()
     {
+        //Placement Phase
+        if (currentPhase == "startPlacement")
+        {
+            PlacementPhase();
+            currentPhase = "inPlacement";
+        }
+    }
+
+    void PlacementPhase()
+    {
+        StartCoroutine("Placement");
+    }
+
+    public IEnumerator Placement()
+    {
+        //code to determine who goes first, for now just 1-4
         activePlayer = 1;
+        while (!Players[activePlayer-1].GetComponent<PlayerClass>().placementPhaseCompleted)
+        {
+            Debug.Log("p1Turn");
+            yield return 0;
+        }
+        activePlayer = 2;
+        while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhaseCompleted)
+        {
+            Debug.Log("p2Turn");
+            yield return 0;
+        }
     }
 
     void Place()
     {
-        List<Vector3> positions = new List<Vector3>() { new Vector3(5, 0, -4), new Vector3(-5, 0, -4), new Vector3(5, 0, 4), new Vector3(-5, 0, 4) };
-        int id = 1;
+        List<Vector3> positions = new List<Vector3>() { new Vector3(0, 0, 6), new Vector3(6, 0, 0), new Vector3(0, 0, -6), new Vector3(-6, 0, 0) };
+        int id = 0;
         for (int i = Players.Count; i > 0; i--)
         {         
             int tempInt = Random.Range(0, i - 1);
-            Players[tempInt].GetComponent<PlayerClass>().playerID = id;
-            Transform.Instantiate(Players[tempInt], positions[i-1], Quaternion.identity);
+            Players[tempInt].GetComponent<PlayerClass>().playerID = id+1;
+            Transform.Instantiate(Players[tempInt], positions[tempInt], Quaternion.identity);
+            positions.RemoveAt(tempInt);
             Players.RemoveAt(tempInt);
             id++;
         }
@@ -80,7 +110,8 @@ public class GameManager : MonoBehaviour
         }
         //for (int i = 0; i < total; i++)
         //{
-        //    Players[i].GetComponent<PlayerClass>().playerID = i + 1;
+        //    int tempInt = Random.Range(0, i);
+        //    Players[tempInt].GetComponent<PlayerClass>().playerID = i + 1;
         //}
     }
     void BuildMap()

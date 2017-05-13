@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerClass : MonoBehaviour {
 
     public int playerID = 0;
+    public bool initialSettlement;
+    public bool initialRoad;
+    public bool placementPhaseCompleted;
 	// Use this for initialization
 	void Start ()
     {
@@ -29,5 +32,9 @@ public class PlayerClass : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (initialSettlement && initialRoad)
+        {
+            placementPhaseCompleted = true;
+        }
     }
 }

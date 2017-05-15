@@ -15,7 +15,7 @@ public class CameraClass : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-            this.transform.position = new Vector3(GameManager.instance.Players[GameManager.instance.activePlayer-1].transform.position.x, 9, GameManager.instance.Players[GameManager.instance.activePlayer - 1].transform.position.z);
-            this.transform.LookAt(centerTile.transform);
+        this.transform.position = new Vector3(GameManager.instance.Players[GameManager.instance.activePlayer-1].transform.position.x, 9, GameManager.instance.Players[GameManager.instance.activePlayer - 1].transform.position.z);
+        this.transform.LookAt(centerTile.transform);
 	}
 }

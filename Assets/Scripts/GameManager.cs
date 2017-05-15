@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    public GameObject[] Tiles;
+    private GameObject[] Tiles;
     private Material Desert, Fields, Forest, Hills, Mountains, Pasture;
     private List<Material> TileOptions;
     private List<int> Probabilities;
@@ -185,11 +185,6 @@ public class GameManager : MonoBehaviour
             GameObject newPlayer = (GameObject)Resources.Load("Player", typeof(GameObject));
             Players.Add(newPlayer);
         }
-        //for (int i = 0; i < total; i++)
-        //{
-        //    int tempInt = Random.Range(0, i);
-        //    Players[tempInt].GetComponent<PlayerClass>().playerID = i + 1;
-        //}
     }
     void BuildMap()
     {

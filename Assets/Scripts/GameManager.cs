@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    private GameObject[] Tiles;
+    public GameObject[] Tiles;
     private Material Desert, Fields, Forest, Hills, Mountains, Pasture;
     private List<Material> TileOptions;
+    private List<int> Probabilities;
     public List<GameObject> Players = new List<GameObject>();
     public int activePlayer;
     public string currentPhase;
+    public GameObject ProbabilityTile;
 
     // Use this for initialization
-    void Awake ()
+    void Awake()
     {
-		if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -36,6 +39,8 @@ public class GameManager : MonoBehaviour
             Forest, Forest, Hills, Hills, Hills, Mountains, Mountains, Mountains, Pasture, Pasture, Pasture, Pasture });
 
         Tiles = GameObject.FindGameObjectsWithTag("Tile");
+
+        Probabilities = new List<int>(new int[18] { 5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11 });
 
         DontDestroyOnLoad(gameObject);
         BuildMap();
@@ -68,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         //code to determine who goes first, for now just 1-4
         activePlayer = 1;
-        while (!Players[activePlayer-1].GetComponent<PlayerClass>().placementPhaseCompleted)
+        while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhaseCompleted)
         {
             Debug.Log("p1Turn");
             yield return 0;
@@ -95,6 +100,60 @@ public class GameManager : MonoBehaviour
 
     void ProbabilityTiles()
     {
+        List<string> StartTiles = new List<string>() { "Tile1", "Tile3", "Tile8", "Tile12", "Tile17", "Tile19" };
+        int tempInt = Random.Range(0, 5);
+        string StartTileName = StartTiles[tempInt];
+        int StartTileIndex = 0;
+        for (int i = 0; i < Tiles.Length; i++)
+        {
+            if (Tiles[i].name == StartTileName)
+            {
+                StartTileIndex = i;
+                break;
+            }
+        }
+        List<GameObject> Visited = new List<GameObject>();
+        GameObject CurrentTile = Tiles[StartTileIndex];
+        Visited.Add(CurrentTile);
+        for (int i = 0; i < 18; i++)
+        {
+            if (CurrentTile.transform.Find("default").gameObject.GetComponent<Renderer>().material.name != "Desert (Instance)")
+            {
+                GameObject ProbTile = Instantiate(ProbabilityTile, CurrentTile.transform);
+                ProbTile.transform.Find("Canvas").Find("Text").gameObject.GetComponent<Text>().text = Probabilities[i].ToString();
+                if (!Visited.Contains(CurrentTile.GetComponent<TileClass>().RightTile))
+                {
+                    CurrentTile = CurrentTile.GetComponent<TileClass>().RightTile;
+                    Visited.Add(CurrentTile);
+                }
+                else
+                {
+                    CurrentTile = CurrentTile.GetComponent<TileClass>().RightInsideTile;
+                    Visited.Add(CurrentTile);
+                }
+            }
+            else
+            {
+                Visited.Add(CurrentTile);
+                if (Visited.Contains(CurrentTile.GetComponent<TileClass>().RightTile))
+                    CurrentTile = CurrentTile.GetComponent<TileClass>().RightInsideTile;
+                else
+                    CurrentTile = CurrentTile.GetComponent<TileClass>().RightTile;
+                GameObject ProbTile = Instantiate(ProbabilityTile, CurrentTile.transform);
+                ProbTile.transform.Find("Canvas").Find("Text").gameObject.GetComponent<Text>().text = Probabilities[i].ToString();
+                if (!Visited.Contains(CurrentTile.GetComponent<TileClass>().RightTile))
+                {
+                    CurrentTile = CurrentTile.GetComponent<TileClass>().RightTile;
+                    Visited.Add(CurrentTile);
+                }
+                else
+                {
+                    CurrentTile = CurrentTile.GetComponent<TileClass>().RightInsideTile;
+                    Visited.Add(CurrentTile);
+                }
+            }
+        }
+
 
     }
     void Place()
@@ -102,9 +161,9 @@ public class GameManager : MonoBehaviour
         List<Vector3> positions = new List<Vector3>() { new Vector3(0, 0, 6), new Vector3(6, 0, 0), new Vector3(0, 0, -6), new Vector3(-6, 0, 0) };
         int id = 0;
         for (int i = Players.Count; i > 0; i--)
-        {         
+        {
             int tempInt = Random.Range(0, i - 1);
-            Players[tempInt].GetComponent<PlayerClass>().playerID = id+1;
+            Players[tempInt].GetComponent<PlayerClass>().playerID = id + 1;
             Transform.Instantiate(Players[tempInt], positions[tempInt], Quaternion.identity);
             positions.RemoveAt(tempInt);
             Players.RemoveAt(tempInt);
@@ -134,9 +193,9 @@ public class GameManager : MonoBehaviour
     }
     void BuildMap()
     {
-        foreach(GameObject Tile in Tiles)
+        foreach (GameObject Tile in Tiles)
         {
-            int tempInt = Random.Range(0, TileOptions.Count-1);
+            int tempInt = Random.Range(0, TileOptions.Count - 1);
             Tile.transform.FindChild("default").gameObject.GetComponent<Renderer>().material = TileOptions[tempInt];
             TileOptions.RemoveAt(tempInt);
         }

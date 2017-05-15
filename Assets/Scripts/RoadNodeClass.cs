@@ -28,7 +28,7 @@ public class RoadNodeClass : MonoBehaviour {
 
     void OnMouseOver()
     {
-        if (GameManager.instance.currentPhase == "inPlacement")
+        if (GameManager.instance.currentPhase == "inPlacement" && !placed)
             BuildingPlacement(GameManager.instance.activePlayer, GameManager.instance.currentPhase);
     }
 

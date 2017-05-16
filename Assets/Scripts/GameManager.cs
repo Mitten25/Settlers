@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator Placement()
     {
-        //code to determine who goes first, for now just 1-4
+        //TODO: code to determine who goes first, for now just 1-4
         yield return StartCoroutine(PlayerPlacement(1, 1));
         yield return StartCoroutine(PlayerPlacement(2, 1));
         yield return StartCoroutine(PlayerPlacement(3, 1));

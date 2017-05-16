@@ -108,7 +108,9 @@ public class GameManager : MonoBehaviour
         {
             if (Tiles[i].name == StartTileName)
             {
-                if (Tiles[i].transform.GetChild(0).gameObject.GetComponent<Renderer>().material.name != "Desert (Instance)")
+                //come look at this later, if starting corner is desert need to do something other than changing index by one, might be fixed by allowing
+                //players to choose.
+                if (Tiles[i].transform.GetChild(0).gameObject.GetComponent<Renderer>().material.name == "Desert (Instance)")
                 {
                     StartTileIndex = i - 1;
                     break;

@@ -108,8 +108,16 @@ public class GameManager : MonoBehaviour
         {
             if (Tiles[i].name == StartTileName)
             {
-                StartTileIndex = i;
-                break;
+                if (Tiles[i].transform.GetChild(0).gameObject.GetComponent<Renderer>().material.name != "Desert (Instance)")
+                {
+                    StartTileIndex = i - 1;
+                    break;
+                }
+                else
+                {
+                    StartTileIndex = i;
+                    break;
+                }
             }
         }
         List<GameObject> Visited = new List<GameObject>();
@@ -117,7 +125,7 @@ public class GameManager : MonoBehaviour
         Visited.Add(CurrentTile);
         for (int i = 0; i < 18; i++)
         {
-            if (CurrentTile.transform.Find("default").gameObject.GetComponent<Renderer>().material.name != "Desert (Instance)")
+            if (CurrentTile.transform.GetChild(0).gameObject.GetComponent<Renderer>().material.name != "Desert (Instance)")
             {
                 GameObject ProbTile = Instantiate(ProbabilityTile, CurrentTile.transform);
                 ProbTile.transform.Find("Canvas").Find("Text").gameObject.GetComponent<Text>().text = Probabilities[i].ToString();
@@ -191,7 +199,15 @@ public class GameManager : MonoBehaviour
         foreach (GameObject Tile in Tiles)
         {
             int tempInt = Random.Range(0, TileOptions.Count - 1);
-            Tile.transform.FindChild("default").gameObject.GetComponent<Renderer>().material = TileOptions[tempInt];
+            if (TileOptions[tempInt].name != "Forest")
+                Tile.transform.FindChild("default").gameObject.GetComponent<Renderer>().material = TileOptions[tempInt];
+            //Example of how tiles will be made when we have meshes for them all
+            else
+            {
+                Destroy(Tile.transform.Find("default").gameObject);
+                GameObject ForestTile = Instantiate((GameObject)Resources.Load("ForestTile", typeof(GameObject)), Tile.transform);
+                ForestTile.transform.parent = Tile.transform;
+            }
             TileOptions.RemoveAt(tempInt);
         }
     }

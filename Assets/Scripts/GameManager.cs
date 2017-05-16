@@ -69,33 +69,85 @@ public class GameManager : MonoBehaviour
         StartCoroutine("Placement");
     }
 
+    IEnumerator PlayerPlacement(int activePlayerID, int placementPhase)
+    {
+        activePlayer = activePlayerID;
+        if (placementPhase == 1)
+        {
+            while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase1Completed)
+            {
+                Debug.Log("p1Turn");
+                yield return 0;
+            }
+        }
+        else if (placementPhase == 2)
+        {
+            while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase2Completed)
+            {
+                Debug.Log("p1Turn");
+                yield return 0;
+            }
+        }
+    }
+
     public IEnumerator Placement()
     {
         //code to determine who goes first, for now just 1-4
-        activePlayer = 1;
-        while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhaseCompleted)
-        {
-            Debug.Log("p1Turn");
-            yield return 0;
-        }
-        activePlayer = 2;
-        while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhaseCompleted)
-        {
-            Debug.Log("p2Turn");
-            yield return 0;
-        }
-        activePlayer = 3;
-        while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhaseCompleted)
-        {
-            Debug.Log("p3Turn");
-            yield return 0;
-        }
-        activePlayer = 4;
-        while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhaseCompleted)
-        {
-            Debug.Log("p4Turn");
-            yield return 0;
-        }
+        yield return StartCoroutine(PlayerPlacement(1, 1));
+        yield return StartCoroutine(PlayerPlacement(2, 1));
+        yield return StartCoroutine(PlayerPlacement(3, 1));
+        yield return StartCoroutine(PlayerPlacement(4, 1));
+        yield return StartCoroutine(PlayerPlacement(4, 2));
+        yield return StartCoroutine(PlayerPlacement(3, 2));
+        yield return StartCoroutine(PlayerPlacement(2, 2));
+        yield return StartCoroutine(PlayerPlacement(1, 2));
+        //activePlayer = 1;
+        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase1Completed)
+        //{
+        //    Debug.Log("p1Turn");
+        //    yield return 0;
+        //}
+        //activePlayer = 2;
+        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase1Completed)
+        //{
+        //    Debug.Log("p2Turn");
+        //    yield return 0;
+        //}
+        //activePlayer = 3;
+        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase1Completed)
+        //{
+        //    Debug.Log("p3Turn");
+        //    yield return 0;
+        //}
+        //activePlayer = 4;
+        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase1Completed)
+        //{
+        //    Debug.Log("p4Turn");
+        //    yield return 0;
+        //}
+        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase2Completed)
+        //{
+        //    Debug.Log("p4Turn");
+        //    yield return 0;
+        //}
+        //activePlayer = 3;
+        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase2Completed)
+        //{
+        //    Debug.Log("p3Turn");
+        //    yield return 0;
+        //}
+        //activePlayer = 2;
+        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase2Completed)
+        //{
+        //    Debug.Log("p2Turn");
+        //    yield return 0;
+        //}
+        //activePlayer = 1;
+        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase2Completed)
+        //{
+        //    Debug.Log("p1Turn");
+        //    yield return 0;
+        //}
     }
 
     void ProbabilityTiles()

@@ -44,7 +44,8 @@ public class SettlementNodeClass : MonoBehaviour {
 
     void BuildingPlacement(int activePlayer, string phase)
     {
-        if (phase == "inPlacement" && !GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement)
+        if ((phase == "inPlacement" && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement == 0 && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad <= 1)
+            || (phase == "inPlacement" && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement == 1 && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad >= 1))
         {
             if (!hasBuilding)
             {
@@ -54,7 +55,7 @@ public class SettlementNodeClass : MonoBehaviour {
             if (Input.GetMouseButtonDown(0))
             {
                 placed = true;
-                GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement = true;
+                GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement ++;
             }
         }
     }

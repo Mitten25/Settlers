@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerClass : MonoBehaviour {
 
     public int playerID = 0;
-    public bool initialSettlement;
-    public bool initialRoad;
-    public bool placementPhaseCompleted;
-	// Use this for initialization
-	void Start ()
+    public int initialSettlement;
+    public int initialRoad;
+    public bool placementPhase1Completed;
+    public bool placementPhase2Completed;
+    // Use this for initialization
+    void Start ()
     {
 		if(playerID == 1)
         {
@@ -32,9 +33,13 @@ public class PlayerClass : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (initialSettlement && initialRoad)
+        if (initialSettlement == 1 && initialRoad == 1)
         {
-            placementPhaseCompleted = true;
+            placementPhase1Completed = true;
+        }
+        if (initialSettlement == 2 && initialRoad == 2)
+        {
+            placementPhase2Completed = true;
         }
     }
 }

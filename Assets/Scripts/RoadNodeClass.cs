@@ -43,7 +43,8 @@ public class RoadNodeClass : MonoBehaviour {
 
     void BuildingPlacement(int activePlayer, string phase)
     {
-        if (phase == "inPlacement" && !GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad)
+        if ((phase == "inPlacement" && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad == 0 && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement <= 1) ||
+            (phase == "inPlacement" && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad == 1 && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement >= 1))
         {
             if (!hasBuilding)
             {
@@ -53,7 +54,7 @@ public class RoadNodeClass : MonoBehaviour {
             if (Input.GetMouseButtonDown(0))
             {
                 placed = true;
-                GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad = true;
+                GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad ++;
             }
         }
     }

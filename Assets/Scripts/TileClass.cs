@@ -10,6 +10,23 @@ public class TileClass : MonoBehaviour {
     public GameObject RightInsideTile;
     public List<GameObject> SettlementNodes = new List<GameObject>();
 
+    //Nodes are placed in the List as such:
+    //
+    //                 0
+    //                 +
+    //   5       +           +       1
+    //     +                       +
+    //     +                       +
+    //     +                       +
+    //     +                       +
+    //     +                       +
+    //     +                       +
+    //     +                       +
+    //   4       +           +       2 
+    //                 +
+    //                 3
+    //
+
     // Use this for initialization
     void Start ()
     {
@@ -19,6 +36,7 @@ public class TileClass : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //Only necessary while tiles lack set nodes
 		if (SettlementNodes.Count > 0)
         {
             if (SettlementNodes[0].GetComponent<SettlementNodeClass>().placed == true

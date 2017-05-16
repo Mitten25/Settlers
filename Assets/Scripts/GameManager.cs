@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         Populate(4);
         Place();
         RefreshPlayerObjects();
-        //TODO: Probability Tiles
         ProbabilityTiles();
         currentPhase = "startPlacement";
         activePlayer = 1;
@@ -103,47 +102,6 @@ public class GameManager : MonoBehaviour
         yield return StartCoroutine(PlayerPlacement(1, 2));
         //activePlayer = 1;
         //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase1Completed)
-        //{
-        //    Debug.Log("p1Turn");
-        //    yield return 0;
-        //}
-        //activePlayer = 2;
-        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase1Completed)
-        //{
-        //    Debug.Log("p2Turn");
-        //    yield return 0;
-        //}
-        //activePlayer = 3;
-        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase1Completed)
-        //{
-        //    Debug.Log("p3Turn");
-        //    yield return 0;
-        //}
-        //activePlayer = 4;
-        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase1Completed)
-        //{
-        //    Debug.Log("p4Turn");
-        //    yield return 0;
-        //}
-        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase2Completed)
-        //{
-        //    Debug.Log("p4Turn");
-        //    yield return 0;
-        //}
-        //activePlayer = 3;
-        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase2Completed)
-        //{
-        //    Debug.Log("p3Turn");
-        //    yield return 0;
-        //}
-        //activePlayer = 2;
-        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase2Completed)
-        //{
-        //    Debug.Log("p2Turn");
-        //    yield return 0;
-        //}
-        //activePlayer = 1;
-        //while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase2Completed)
         //{
         //    Debug.Log("p1Turn");
         //    yield return 0;

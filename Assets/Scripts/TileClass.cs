@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileClass : MonoBehaviour {
+public class TileClass : MonoBehaviour
+{
 
     public GameObject LeftTile;
     public GameObject RightTile;
     public GameObject LeftInsideTile;
     public GameObject RightInsideTile;
     public List<GameObject> SettlementNodes = new List<GameObject>();
+    public string Type;
 
     //Nodes are placed in the List as such:
     //
@@ -28,16 +30,29 @@ public class TileClass : MonoBehaviour {
     //
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    }
+
+    // Update is called once per frame
+    void Update()
     {
+        //will be reduced to else statement when all tiles have meshes
+        if (transform.GetChild(0).name == "default")
+        {
+            Type = transform.GetChild(0).gameObject.GetComponent<Renderer>().material.name;
+            Type = Type.Split(' ')[0];
+        }
+        else
+        {
+            Type = transform.GetChild(0).name;
+            Type = Type.Split('(')[0];
+
+        }
+
         //Only necessary while tiles lack set nodes
-		if (SettlementNodes.Count > 0)
+        if (SettlementNodes.Count > 0)
         {
             if (SettlementNodes[0].GetComponent<SettlementNodeClass>().placed == true
                 || SettlementNodes[2].GetComponent<SettlementNodeClass>().placed == true
@@ -56,5 +71,5 @@ public class TileClass : MonoBehaviour {
                 SettlementNodes[4].SetActive(false);
             }
         }
-	}
+    }
 }

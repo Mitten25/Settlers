@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int activePlayer;
     public string currentPhase;
     public GameObject ProbabilityTile;
+    public List<int> PlayerOrder = new List<int>();
 
     // Use this for initialization
     void Awake()
@@ -179,15 +180,16 @@ public class GameManager : MonoBehaviour
     void Place()
     {
         List<Vector3> positions = new List<Vector3>() { new Vector3(0, 0, 6), new Vector3(6, 0, 0), new Vector3(0, 0, -6), new Vector3(-6, 0, 0) };
-        int id = 0;
+        List<int> playerids = new List<int>() { 1, 2, 3, 4 };
         for (int i = Players.Count; i > 0; i--)
         {
             int tempInt = Random.Range(0, i - 1);
-            Players[tempInt].GetComponent<PlayerClass>().playerID = id + 1;
-            Transform.Instantiate(Players[tempInt], positions[tempInt], Quaternion.identity);
-            positions.RemoveAt(tempInt);
+            Players[tempInt].GetComponent<PlayerClass>().playerID = playerids[tempInt];
+            PlayerOrder.Add(playerids[tempInt]);
+            Transform.Instantiate(Players[tempInt], positions[0], Quaternion.identity);
+            positions.RemoveAt(0);
+            playerids.RemoveAt(tempInt);
             Players.RemoveAt(tempInt);
-            id++;
         }
     }
 
@@ -212,7 +214,7 @@ public class GameManager : MonoBehaviour
         {
             int tempInt = Random.Range(0, TileOptions.Count - 1);
             if (TileOptions[tempInt].name != "Forest")
-                Tile.transform.FindChild("default").gameObject.GetComponent<Renderer>().material = TileOptions[tempInt];
+                Tile.transform.Find("default").gameObject.GetComponent<Renderer>().material = TileOptions[tempInt];
             //Example of how tiles will be made when we have meshes for them all
             else
             {

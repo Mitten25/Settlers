@@ -213,13 +213,19 @@ public class GameManager : MonoBehaviour
         foreach (GameObject Tile in Tiles)
         {
             int tempInt = Random.Range(0, TileOptions.Count - 1);
-            if (TileOptions[tempInt].name != "Forest")
+            if (TileOptions[tempInt].name != "Forest" && TileOptions[tempInt].name != "Fields")
                 Tile.transform.Find("default").gameObject.GetComponent<Renderer>().material = TileOptions[tempInt];
             //Example of how tiles will be made when we have meshes for them all
-            else
+            else if (TileOptions[tempInt].name == "Forest")
             {
                 Destroy(Tile.transform.Find("default").gameObject);
                 GameObject ForestTile = Instantiate((GameObject)Resources.Load("ForestTile", typeof(GameObject)), Tile.transform);
+                ForestTile.transform.parent = Tile.transform;
+            }
+            else if (TileOptions[tempInt].name == "Fields")
+            {
+                Destroy(Tile.transform.Find("default").gameObject);
+                GameObject ForestTile = Instantiate((GameObject)Resources.Load("FieldsTile", typeof(GameObject)), Tile.transform);
                 ForestTile.transform.parent = Tile.transform;
             }
             TileOptions.RemoveAt(tempInt);

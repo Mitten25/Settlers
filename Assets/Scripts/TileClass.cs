@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TileClass : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class TileClass : MonoBehaviour
     public GameObject RightInsideTile;
     public List<GameObject> SettlementNodes = new List<GameObject>();
     public string Type;
+    public int Probability;
 
     //Nodes are placed in the List as such:
     //
@@ -39,17 +41,21 @@ public class TileClass : MonoBehaviour
     void Update()
     {
         //will be reduced to else statement when all tiles have meshes
-        if (transform.GetChild(0).name == "default")
-        {
-            Type = transform.GetChild(0).gameObject.GetComponent<Renderer>().material.name;
-            Type = Type.Split(' ')[0];
-        }
-        else
-        {
-            Type = transform.GetChild(0).name;
-            Type = Type.Split('(')[0];
+        //if (transform.GetChild(0).name == "default")
+        //{
+        //    Type = transform.GetChild(0).gameObject.GetComponent<Renderer>().material.name;
+        //    Type = Type.Split(' ')[0];
+        //}
+        //else
+        //{
+        //    Type = transform.GetChild(0).name;
+        //    Type = Type.Split('(')[0];
+        //}
 
-        }
+        //if(transform.GetChild(1) != null)
+        //{
+        //    Probability = int.Parse(transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text);
+        //}
 
         //Only necessary while tiles lack set nodes
         if (SettlementNodes.Count > 0)

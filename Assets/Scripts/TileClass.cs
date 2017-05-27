@@ -52,9 +52,9 @@ public class TileClass : MonoBehaviour
         //    Type = Type.Split('(')[0];
         //}
 
-        //if(transform.GetChild(1) != null)
+        //if (transform.GetChild(1) != null)
         //{
-        //    Probability = int.Parse(transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text);
+        //        Probability = int.Parse(transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text);
         //}
 
         //Only necessary while tiles lack set nodes

@@ -79,7 +79,6 @@ public class GameManager : MonoBehaviour
         {
             while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase1Completed)
             {
-                Debug.Log("p1Turn");
                 yield return 0;
             }
         }
@@ -87,7 +86,6 @@ public class GameManager : MonoBehaviour
         {
             while (!Players[activePlayer - 1].GetComponent<PlayerClass>().placementPhase2Completed)
             {
-                Debug.Log("p1Turn");
                 yield return 0;
             }
         }

@@ -29,8 +29,8 @@ public class SettlementNodeClass : MonoBehaviour {
 
     void OnMouseOver()
     {
-        if (GameManager.instance.currentPhase == "inPlacement" && !placed)
-            BuildingPlacement(GameManager.instance.activePlayer, GameManager.instance.currentPhase);
+        if (GameManager.instance.currentPhase == GameManager.state.PLACEMENT && !placed)
+            BuildingPlacement(GameManager.instance.activePlayer, GameManager.state.PLACEMENT);
     }
 
     private void OnMouseExit()
@@ -42,10 +42,10 @@ public class SettlementNodeClass : MonoBehaviour {
         }
     }
 
-    void BuildingPlacement(int activePlayer, string phase)
+    void BuildingPlacement(int activePlayer, GameManager.state phase)
     {
-        if ((phase == "inPlacement" && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement == 0 && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad <= 1)
-            || (phase == "inPlacement" && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement == 1 && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad >= 1))
+        if ((phase == GameManager.state.PLACEMENT && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement == 0 && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad <= 1)
+            || (phase == GameManager.state.PLACEMENT && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialSettlement == 1 && GameManager.instance.Players[activePlayer - 1].GetComponent<PlayerClass>().initialRoad >= 1))
         {
             if (!hasBuilding)
             {

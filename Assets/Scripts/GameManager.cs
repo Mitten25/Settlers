@@ -13,7 +13,11 @@ public class GameManager : MonoBehaviour
     private List<int> Probabilities;
     public List<GameObject> Players = new List<GameObject>();
     public int activePlayer;
-    public string currentPhase;
+
+    public enum state { PLACEMENT, };
+
+    public state currentPhase;
+
     public GameObject ProbabilityTile;
     public List<int> PlayerOrder = new List<int>();
 
@@ -50,17 +54,16 @@ public class GameManager : MonoBehaviour
         Place();
         RefreshPlayerObjects();
         ProbabilityTiles();
-        currentPhase = "startPlacement";
+        currentPhase = state.PLACEMENT;
         activePlayer = 1;
     }
 
     void Update()
     {
         //Placement Phase
-        if (currentPhase == "startPlacement")
+        if (currentPhase == state.PLACEMENT)
         {
             PlacementPhase();
-            currentPhase = "inPlacement";
         }
     }
 
@@ -142,6 +145,7 @@ public class GameManager : MonoBehaviour
             {
                 GameObject ProbTile = Instantiate(ProbabilityTile, CurrentTile.transform);
                 ProbTile.transform.Find("Canvas").Find("Text").gameObject.GetComponent<Text>().text = Probabilities[i].ToString();
+                CurrentTile.GetComponent<TileClass>().Probability = Probabilities[i];
                 if (!Visited.Contains(CurrentTile.GetComponent<TileClass>().RightTile))
                 {
                     CurrentTile = CurrentTile.GetComponent<TileClass>().RightTile;
